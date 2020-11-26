@@ -2,10 +2,10 @@
 
 CREATE TABLE GOODS
 (
-       gId     int(10) primary key,
-       gName   varchar(20) NOT NULL UNIQUE,
-       gPrice  double(18,2) NOT NULL,
-       gNum    int(11) NOT NULL
+       gId     NUMBER(10) primary key,
+       gName   VARCHAR2(20) NOT NULL UNIQUE,
+       gPrice  NUMBER(18,2) NOT NULL,
+       gNum    NUMBER(11) NOT NULL
 );
 
 --需求：gid主键自动生成。分以下两步实现！
@@ -32,3 +32,12 @@ CREATE TRIGGER goods_trigger
 
 
 --truncate 能够清除数据，然而，不能抹掉序列的记忆
+
+# mysql
+CREATE TABLE GOODS
+(
+       gId     int(10) primary key,
+       gName   varchar(20) NOT NULL UNIQUE,
+       gPrice  double(18,2) NOT NULL,
+       gNum    int(11) NOT NULL
+);

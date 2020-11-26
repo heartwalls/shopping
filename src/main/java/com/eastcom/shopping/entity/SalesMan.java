@@ -4,63 +4,63 @@ package com.eastcom.shopping.entity;
  * 售货员实体类
  */
 public class SalesMan {
-    private int sId;
-    private String sName;
-    private String sPassword;
+    private int mId;
+    private String mName;
+    private String mPassword;
 
     /**
      * 验证用户登陆
-     * @param sId
-     * @param sPassword
+     * @param mId
+     * @param mPassword
      */
-    public SalesMan(int sId, String sPassword) {
-        this.sId = sId;
-        this.sPassword = sPassword;
+    public SalesMan(int mId, String mPassword) {
+        this.mId = mId;
+        this.mPassword = mPassword;
     }
 
     /**
      * 查询用户，更改用户密码
-     * @param sId
-     * @param sName
-     * @param sPassword
+     * @param mId
+     * @param mName
+     * @param mPassword
      */
-    public SalesMan(int sId, String sName, String sPassword) {
-        this.sId = sId;
-        this.sName = sName;
-        this.sPassword = sPassword;
+    public SalesMan(int mId, String mName, String mPassword) {
+        this.mId = mId;
+        this.mName = mName;
+        this.mPassword = mPassword;
     }
 
     /**
      * 添加用户
-     * @param sName
-     * @param sPassword
+     * @param mName
+     * @param mPassword
      */
-    public SalesMan(String sName, String sPassword) {
-        this.sName = sName;
-        this.sPassword = sPassword;
+    public SalesMan(String mName, String mPassword) {
+        this.mName = mName;
+        this.mPassword = mPassword;
     }
 
-    public int getsId() {
-        return sId;
+    public int getmId() {
+        return mId;
     }
 
-    public void setsId(int sId) {
-        this.sId = sId;
+    public void setmId(int mId) {
+        this.mId = mId;
     }
 
-    public String getsName() {
-        return sName;
+    public String getmName() {
+        return mName;
     }
 
-    public void setsName(String sName) {
-        this.sName = sName;
+    public void setmName(String mName) {
+        this.mName = mName;
     }
 
-    public String getsPassword() {
-        return sPassword;
+    public String getmPassword() {
+        return mPassword;
     }
 
-    public void setsPassword(String sPassword) {
-        this.sPassword = sPassword;
+    public void setmPassword(String mPassword) {
+        this.mPassword = mPassword;
     }
 }
