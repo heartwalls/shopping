@@ -46,4 +46,34 @@ public class SalesDao {
         }
         return salesList;
     }
+
+    /**
+     * 购物结算
+     * @param sales
+     * @return
+     */
+    public boolean shoppingSettlement(Sales sales) {
+        boolean bool = false;
+        connection = DBUtils.connection();
+        String insert = "insert into sales(gId,sId,sNum) values(?,?,?)";
+        try {
+            ps = connection.prepareStatement(insert);
+            ps.setInt(1, sales.getgId());
+            ps.setInt(2, sales.getsId());
+            ps.setInt(3, sales.getgNum());
+            int i = ps.executeUpdate();
+            if (i > 0) {
+                bool = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                DBUtils.close(ps, connection);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return bool;
+    }
 }

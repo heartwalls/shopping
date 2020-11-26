@@ -101,4 +101,31 @@ public class SalesManDao {
         }
         return bool;
     }
+
+    /**
+     * 删除售货员
+     * @param mName
+     * @return
+     */
+    public boolean deleteSalesMan(String mName) {
+        boolean bool = false;
+        connection = DBUtils.connection();
+        String delete = "DELETE FROM salesman WHERE mName=?";
+        try
+        {
+            ps = connection.prepareStatement(delete);
+            ps.setString(1,mName);
+            int rs = ps.executeUpdate();
+            if (rs > 0)
+            {
+                bool = true;
+            }
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }finally{
+            DBUtils.close(ps, connection);
+        }
+        return bool;
+    }
 }
