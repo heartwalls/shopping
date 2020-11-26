@@ -41,6 +41,11 @@ public class SalesManDao {
         return salesManList;
     }
 
+    /**
+     * 添加售货员
+     * @param man
+     * @return
+     */
     public boolean addSalesMan(SalesMan man) {
         boolean bool = false;
         connection = DBUtils.connection();
@@ -57,7 +62,42 @@ public class SalesManDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.close(ps, connection);
+            try {
+                DBUtils.close(ps, connection);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return bool;
+    }
+
+    /**
+     * 修改售货员信息
+     * @param id 根据id修改信息
+     * @param salesMan
+     * @return
+     */
+    public boolean updateSalesMan(int id, SalesMan salesMan) {
+        boolean bool = false;
+        connection = DBUtils.connection();
+        String update = "update salesman set mName=?,mPassword=? where mId=?";
+        try {
+            ps = connection.prepareStatement(update);
+            ps.setString(1, salesMan.getmName());
+            ps.setString(2, salesMan.getmPassword());
+            ps.setInt(3, salesMan.getmId());
+            int i = ps.executeUpdate();
+            if (i > 0) {
+                bool = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                DBUtils.close(ps, connection);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return bool;
     }
