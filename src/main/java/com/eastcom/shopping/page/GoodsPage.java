@@ -194,20 +194,21 @@ public class GoodsPage extends ScannerChoice {
         ArrayList<Goods> list = new GoodsDao().displayGoods();
         if (list.size() <= 0) {
             System.out.println("库存为空！");
-            MainPage.maintenancePage();
-        }
-        System.out.println("\t商品编号\t\t商品名称\t\t商品价格\t\t商品数量\n");
-        for (int i = 0; i < list.size(); i++) {
-            Goods goods = list.get(i);
-            System.out.println("\t"+goods.getgId()+"\t\t"+goods.getgName()+"\t\t"+goods.getgPrice()+"\t\t"+goods.getgNum());
-            int num = goods.getgNum();
-            if (num == 0) {
-                System.out.println(goods.getgName() + "已售空！");
+//            MainPage.maintenancePage();
+        } else {
+            System.out.println("\t商品编号\t\t商品名称\t\t商品价格\t\t商品数量\n");
+            for (int i = 0; i < list.size(); i++) {
+                Goods goods = list.get(i);
+                System.out.println("\t" + goods.getgId() + "\t\t" + goods.getgName() + "\t\t" + goods.getgPrice() + "\t\t" + goods.getgNum());
+                int num = goods.getgNum();
+                if (num == 0) {
+                    System.out.println(goods.getgName() + "已售空！");
+                }
             }
         }
         System.out.println("------------------------------");
         do {
-            System.out.println("输入 0 返回上一级菜单");
+            System.out.println("输入 0 返回上一级菜单:");
             String choice = ScannerChoice.scannerInfoString();
             if ("0".equals(choice)) {
                 MainPage.maintenancePage();
