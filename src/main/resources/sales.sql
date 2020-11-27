@@ -47,3 +47,25 @@ CREATE TABLE shopping.sales (
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8
 COLLATE=utf8_general_ci;
+
+-- 触发器
+CREATE TRIGGER sales_trigger
+AFTER
+INSERT ON sales
+FOR EACH ROW
+UPDATE goods SET gNum = gNum -new.sNum WHERE gId = new.gId;
+
+CREATE TRIGGER add_trigger
+AFTER
+DELETE ON sales
+FOR EACH row
+UPDATE goods SET gNum = gNum +old.sNum WHERE gId = old.gId;
+
+CREATE TRIGGER update_trigger
+AFTER
+UPDATE ON sales
+FOR EACH row
+UPDATE goods SET gNum = gNum -(new.sNum-old.sNum) WHERE gId = old.gId;
+
+show triggers;
+# DROP trigger goods_trigger;

@@ -38,4 +38,19 @@ public class SalesManTest {
         salesMan.setmName("Hali");
         salesManDao.updateSalesMan(101, salesMan);
     }
+
+    @Test
+    public void deleteSalesManTest() {
+        SalesManDao salesManDao = new SalesManDao();
+        salesManDao.deleteSalesMan("Hali");
+    }
+
+    @Test
+    public void querySalesManTest() {
+        ArrayList<SalesMan> list = new SalesManDao().querySalesMan("Joker");
+        for (int i = 0; i < list.size(); i++) {
+            SalesMan salesMan = list.get(i);
+            System.out.println(salesMan.getmId() + "," + salesMan.getmName());
+        }
+    }
 }

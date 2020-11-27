@@ -128,4 +128,33 @@ public class SalesManDao {
         }
         return bool;
     }
+
+    /**
+     * 模糊查询售货员
+     * @param mName
+     * @return
+     */
+    public ArrayList<SalesMan> querySalesMan(String mName) {
+        ArrayList<SalesMan> salesManList = new ArrayList<>();
+        connection = DBUtils.connection();
+        mName = "%" + mName + "%";
+        String query = "select mId,mName,mPassword from salesman where mName like ?";
+        try {
+            ps = connection.prepareStatement(query);
+            ps.setString(1, mName);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                int mId = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                String mPassword = resultSet.getString(3);
+                SalesMan salesMan = new SalesMan(mId, name, mPassword);
+                salesManList.add(salesMan);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeConnect(ps, resultSet, connection);
+        }
+        return salesManList;
+    }
 }
