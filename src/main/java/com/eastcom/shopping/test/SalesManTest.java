@@ -53,4 +53,13 @@ public class SalesManTest {
             System.out.println(salesMan.getmId() + "," + salesMan.getmName());
         }
     }
+
+    @Test
+    public void displaySaleManTest() {
+        ArrayList<SalesMan> list = new SalesManDao().displaySaleMan();
+        for (int i = 0; i < list.size(); i++) {
+            SalesMan salesMan = list.get(i);
+            System.out.println("id:"+salesMan.getmId()+",name:"+salesMan.getmName());
+        }
+    }
 }

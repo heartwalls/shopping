@@ -157,4 +157,30 @@ public class SalesManDao {
         }
         return salesManList;
     }
+
+    /**
+     * 查询所有售货员
+     * @return
+     */
+    public ArrayList<SalesMan> displaySaleMan() {
+        ArrayList<SalesMan> list = new ArrayList<>();
+        connection = DBUtils.connection();
+        String all = "select mId,mName,mPassword from salesman";
+        try {
+            ps = connection.prepareStatement(all);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                int mId = resultSet.getInt("mId");
+                String mName = resultSet.getString(2);
+                String mPassword = resultSet.getString(3);
+                SalesMan salesMan = new SalesMan(mId, mName, mPassword);
+                list.add(salesMan);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.closeConnect(ps, resultSet, connection);
+        }
+        return list;
+    }
 }
