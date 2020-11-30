@@ -2,6 +2,8 @@ package com.eastcom.shopping.utils;
 
 import com.eastcom.shopping.page.GoodsPage;
 import com.eastcom.shopping.page.MainPage;
+import com.eastcom.shopping.page.SalesManPage;
+import com.eastcom.shopping.page.SalesPage;
 
 import java.util.Scanner;
 
@@ -93,6 +95,29 @@ public class ScannerChoice {
                 }
             } else if ("N".equals(choice) || "n".equals(choice)) {
                 MainPage.maintenancePage();
+            }
+            System.out.println("\n输入有误！请重新输入！");
+        } while (true);
+    }
+
+    public static void choiceSalesManNext(String operator) {
+        do {
+            System.out.println("是否继续进行-当前操作:(Y/N)");
+            String choice = ScannerChoice.scannerInfoString();
+
+            if ("y".equals(choice) || "Y".equals(choice))
+            {
+                if ("updateSalesManPage".equals(operator)) {
+                    SalesManPage.updateSalesManPage();
+                } else if ("deleteSalesManPage".equals(operator)) {
+                    SalesManPage.deleteSalesManPage();
+                } else if ("addSalesManPage".equals(operator)) {
+                    SalesManPage.addSalesManPage();
+                } else if ("querySalesManPage".equals(operator)) {
+                    SalesManPage.querySalesManPage();
+                }
+            } else if ("N".equals(choice) || "n".equals(choice)) {
+                MainPage.salesManManagementPage();
             }
             System.out.println("\n输入有误！请重新输入！");
         } while (true);

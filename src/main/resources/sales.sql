@@ -67,5 +67,14 @@ UPDATE ON sales
 FOR EACH row
 UPDATE goods SET gNum = gNum -(new.sNum-old.sNum) WHERE gId = old.gId;
 
+CREATE TRIGGER date_trigger
+BEFORE
+INSERT ON sales
+FOR EACH row
+	if new.sDate is null
+	then
+		set new.sDate = now();
+	end if;
+
 show triggers;
 # DROP trigger goods_trigger;

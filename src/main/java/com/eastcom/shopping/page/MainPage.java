@@ -1,6 +1,10 @@
 package com.eastcom.shopping.page;
 
+import com.eastcom.shopping.dao.SalesManDao;
+import com.eastcom.shopping.entity.SalesMan;
 import com.eastcom.shopping.utils.ScannerChoice;
+
+import java.util.ArrayList;
 
 public class MainPage extends ScannerChoice {
     /**
@@ -93,8 +97,63 @@ public class MainPage extends ScannerChoice {
      * 前台收银界面
      */
     public static void cashRegisterPage() {
-        // TODO
-        System.out.println("前台收银开发中...");
+        System.out.println("\n*******欢迎使用商超购物管理系统*******\n");
+        System.out.println("\t 1.登录系统\n");
+        System.out.println("\t 2.退出系统\n");
+        System.out.println("-----------------------------");
+        System.out.println("请输入选项,或者按 0 返回上一级菜单.");
+
+        do {
+            String choice = ScannerChoice.scannerInfoString();
+            String regex = "[0-2]";
+            if (choice.matches(regex)) {
+                int i = Integer.parseInt(choice);
+                switch (i) {
+                    case 0:
+                        MainPage.mainPage();
+                        break;
+                    case 1:
+                        // 登陆次数限制
+                        int loginLimit = 5;
+                        while (loginLimit != 0) {
+                            loginLimit--;
+                            System.out.println("---用户名---");
+                            String mName = scannerInfoString();
+                            System.out.println("---密码---");
+                            String mPassword = scannerInfoString();
+                            ArrayList<SalesMan> list = new SalesManDao().cashRegisterLog(mName);
+                            if (list == null || list.size() == 0) {
+                                System.out.println("用户不存在！");
+                                System.out.println("\n剩余登陆次数："+loginLimit);
+                            } else {
+                                // 返回一个数组
+                                SalesMan salesMan = list.get(0);
+                                if (mPassword.equals(salesMan.getmPassword())) {
+                                    System.out.println("\t  ---账户成功登陆---");
+                                    shoppingSettlementPage(salesMan.getmId());
+                                } else {
+                                    System.err.println("\t!!用户名或密码错误!!\n");
+                                    System.out.println("\n剩余登陆次数："+loginLimit);
+                                }
+                            }
+                        }
+                        System.out.println("------------------");
+                        // TODO
+                        // 密码错误登陆限制，设计到数据库中
+                        System.err.println("\t！！您已被强制退出系统！！");
+                        break;
+                    case 2:
+                        System.out.println("------------------");
+                        System.out.println("您已经退出系统!");
+                        System.exit(-1);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            System.err.println("!输入有误!");
+            System.out.println("重新输入或按 0 返回上一级菜单");
+        } while (true);
     }
 
     /**
@@ -103,6 +162,21 @@ public class MainPage extends ScannerChoice {
     public static void commodityManagementPage() {
         // TODO
         System.out.println("商品管理开发中...");
+    }
+
+    /**
+     * 购物结算界面
+     */
+    public static void shoppingSettlementPage(int salesManId) {
+        // TODO
+        System.out.println("购物结算界面开发中...");
+    }
+
+    /**
+     * 售货员管理界面
+     */
+    public static void salesManManagementPage() {
+        // TODO
     }
 
     /**
