@@ -40,4 +40,8 @@ public class SalesManPage extends ScannerChoice {
     public static void querySalesManPage() {
 
     }
+
+    public static void displaySalesManPage() {
+
+    }
 }

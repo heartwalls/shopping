@@ -152,6 +152,8 @@ public class MainPage extends ScannerChoice {
                 }
             }
             System.err.println("!输入有误!");
+            // TODO
+            // 限制登陆之后，不允许再登陆
             System.out.println("重新输入或按 0 返回上一级菜单");
         } while (true);
     }
@@ -160,23 +162,98 @@ public class MainPage extends ScannerChoice {
      * 商品管理界面
      */
     public static void commodityManagementPage() {
-        // TODO
-        System.out.println("商品管理开发中...");
+        System.out.println("***************************\n");
+        System.out.println("\t 1.售货员管理\n");
+        System.out.println("\t 2.列出当日卖出列表\n");
+        System.out.println("***************************");
+
+        System.out.println("\n请输入选项,或者按 0 返回上一级菜单.");
+        do {
+            String choice = scannerInfoString();
+            String regex = "[0-2]";
+            if (choice.matches(regex)) {
+                int info = Integer.parseInt(choice);
+                switch (info) {
+                    case 0:
+                        MainPage.mainPage();
+                        break;
+                    case 1:
+                        salesManManagementPage();
+                        break;
+                    case 2:
+                        SalesPage.dailySaleGoodsPage();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            System.err.println("!输入有误!");
+            System.out.println("重新输入或按 0 返回上一级菜单.");
+        } while (true);
     }
 
     /**
      * 购物结算界面
      */
     public static void shoppingSettlementPage(int salesManId) {
-        // TODO
-        System.out.println("购物结算界面开发中...");
+        System.out.println("\n\t*******购物结算*******\n");
+        do {
+            System.out.println("按 S 开始购物结算.按 0 返回账户登录界面");
+            String shop = scannerInfoString();
+            if ("0".equals(shop)) {
+                cashRegisterPage();
+            } else if ("s".equals(shop) || "S".equals(shop)) {
+                //
+            } else {
+                System.err.println("\t输入不合法！");
+            }
+        } while (true);
     }
 
     /**
      * 售货员管理界面
      */
     public static void salesManManagementPage() {
-        // TODO
+        System.out.println("***************************\n");
+        System.out.println("\t 1.添加售货员\n");
+        System.out.println("\t 2.更改售货员\n");
+        System.out.println("\t 3.删除售货员\n");
+        System.out.println("\t 4.查询售货员\n");
+        System.out.println("\t 5.显示所有售货员\n");
+        System.out.println("***************************");
+
+        System.out.println("\n请输入选项,或者按 0 返回上一级菜单.");
+        do {
+            String choice = scannerInfoString();
+            String regex ="[0-5]";
+            if (choice.matches(regex)) {
+                int info = Integer.parseInt(choice);
+                switch (info) {
+                    case 0:
+                        commodityManagementPage();
+                        break;
+                    case 1:
+                        SalesManPage.addSalesManPage();
+                        break;
+                    case 2:
+                        SalesManPage.updateSalesManPage();
+                        break;
+                    case 3:
+                        SalesManPage.deleteSalesManPage();
+                        break;
+                    case 4:
+                        SalesManPage.querySalesManPage();
+                        break;
+                    case 5:
+                        SalesManPage.displaySalesManPage();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            System.err.println("\t!输入有误!");
+            System.out.println("重新输入或按 0 返回上一级菜单.");
+        } while (true);
     }
 
     /**
