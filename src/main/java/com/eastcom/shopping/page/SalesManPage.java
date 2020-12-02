@@ -4,6 +4,8 @@ import com.eastcom.shopping.dao.SalesManDao;
 import com.eastcom.shopping.entity.SalesMan;
 import com.eastcom.shopping.utils.ScannerChoice;
 
+import java.util.ArrayList;
+
 public class SalesManPage extends ScannerChoice {
     /**
      * 添加售货员
@@ -30,7 +32,53 @@ public class SalesManPage extends ScannerChoice {
      * 更新售货员信息
      */
     public static void updateSalesManPage() {
+        System.out.println("\t正在执行更改售货员操作\n");
+        System.out.println("请输入想要更改的售货员名字");
+        String mName = ScannerChoice.scannerInfoString();
+        ArrayList<SalesMan> list = new SalesManDao().querySalesMan(mName);
+        if (list.size() <= 0) {
+            System.err.println("\t！！查无此人！！");
+            ScannerChoice.choiceSalesManNext("updateSalesManPage");
+        } else {
+            System.out.println("\t\t\t售货员信息\n\n");
+            System.out.println("\t售货员编号\t\t售货员姓名\t\t售货员密码");
+            // 查询出来的数据只有一个值
+            SalesMan salesMan = list.get(0);
+            System.out.println("\t"+salesMan.getmId()+"\t\t\t"+salesMan.getmName()+"\t\t\t"+salesMan.getmPassword());
+            System.out.println();
 
+            System.out.println("\n--------请更改售货员信息\n");
+            System.out.println("\t1.更改售货员信息");
+            System.out.println("\t0.返回上一级菜单");
+            do {
+                String choice = ScannerChoice.scannerInfoString();
+                String regex = "[0-1]";
+                if (choice.matches(regex)) {
+                    int info = Integer.parseInt(choice);
+                    switch (info) {
+                        case 0:
+                            MainPage.salesManManagementPage();
+                            break;
+                        case 1:
+                            System.out.println("更改售货员-新工号");
+                            int id = ScannerChoice.scannerNum();
+                            System.out.println("更改售货员-新姓名");
+                            String newName = ScannerChoice.scannerInfoString();
+                            System.out.println("更改售货员-新密码");
+                            String newPassword = ScannerChoice.scannerInfoString();
+                            boolean b = new SalesManDao().updateSalesMan(id, new SalesMan(id, newName, newPassword));
+                            if (b) {
+                                System.out.println("更新售货员信息成功！");
+                            } else {
+                                System.out.println("更新售货员信息失败！");
+                            }
+                    }
+                } else {
+                    System.out.println("输入错误！请重新输入！");
+                }
+                ScannerChoice.choiceSalesManNext("updateSalesManPage");
+            } while (true);
+        }
     }
 
     public static void deleteSalesManPage() {
