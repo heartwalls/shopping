@@ -224,7 +224,7 @@ public class MainPage extends ScannerChoice {
         // 查询商品数量,1表示根据商品名称查询
         // TODO
         // 目前不能模糊查询
-        ArrayList<Goods> list = new GoodsDao().queryGoods(1);
+        ArrayList<Goods> list = new GoodsDao().selectGoodsByName(info);
         int num = list.size();
         if (num == 0 || list == null) {
             System.out.println("找不到该商品！");
@@ -260,7 +260,7 @@ public class MainPage extends ScannerChoice {
                     System.out.println("\n实际缴费金额");
 
                     // 销售表更新
-                    Sales sales = new Sales(id+1, id, salesManId, choiceNum);
+                    Sales sales = new Sales(id, salesManId, choiceNum);
                     boolean insert = new SalesDao().shoppingSettlement(sales);
                     if (insert) {
                         // TODO

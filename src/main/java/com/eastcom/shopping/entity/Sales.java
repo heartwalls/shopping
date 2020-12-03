@@ -16,14 +16,12 @@ public class Sales {
 
     /**
      * 购物结算
-     * @param sId
      * @param gId
      * @param mId
      * @param sNum
      */
-    public Sales(int sId, int gId, int mId, int sNum) {
+    public Sales(int gId, int mId, int sNum) {
         this.gId = gId;
-        this.sId = sId;
         this.mId = mId;
         this.sNum = sNum;
     }

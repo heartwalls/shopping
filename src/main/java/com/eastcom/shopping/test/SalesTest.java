@@ -14,7 +14,7 @@ public class SalesTest {
     @Test
     public void shoppingSettlementTest() {
         SalesDao salesDao = new SalesDao();
-        Sales sales = new Sales(1, 1, 101, 1);
+        Sales sales = new Sales(1, 101, 1);
         salesDao.shoppingSettlement(sales);
     }
 }

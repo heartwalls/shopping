@@ -106,27 +106,35 @@ public class GoodsDao {
         return bool;
     }
 
-/**
-    public boolean selectGoodsById(int id) {
-        boolean bool = false;
+    /**
+     * 根据名称查找商品
+     * @param name
+     * @return
+     */
+    public ArrayList<Goods> selectGoodsByName(String name) {
+        ArrayList<Goods> goodsList = new ArrayList<>();
         connection = DBUtils.connection();
-        String selectId = "select * from goods where gid=?";
+        String selectName = "select * from goods where gName=?";
         try {
-            preparedStatement = connection.prepareStatement(selectId);
+            preparedStatement = connection.prepareStatement(selectName);
+            preparedStatement.setString(1, name);
             resultSet = preparedStatement.executeQuery();
-            int gId = resultSet.getInt(1);
+            while (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                String gName = resultSet.getString(2);
+                double price = resultSet.getDouble(3);
+                int num = resultSet.getInt(4);
+                Goods goods = new Goods(id, gName, price, num);
+                goodsList.add(goods);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                DBUtils.closeConnect(preparedStatement, resultSet, connection);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            DBUtils.closeConnect(preparedStatement, resultSet, connection);
         }
-        return bool;
+        return goodsList;
     }
-*/
+
 
     /**
      * 查询商品信息

@@ -49,13 +49,12 @@ public class SalesDao {
     public boolean shoppingSettlement(Sales sales) {
         boolean bool = false;
         connection = DBUtils.connection();
-        String insert = "insert into sales(sId,gId,mId,sNum) values(?,?,?,?)";
+        String insert = "insert into sales(gId,mId,sNum) values(?,?,?)";
         try {
             ps = connection.prepareStatement(insert);
-            ps.setInt(1, sales.getsId());
-            ps.setInt(2, sales.getgId());
-            ps.setInt(3, sales.getmId());
-            ps.setInt(4, sales.getgNum());
+            ps.setInt(1, sales.getgId());
+            ps.setInt(2, sales.getmId());
+            ps.setInt(3, sales.getsNum());
             int i = ps.executeUpdate();
             if (i > 0) {
                 bool = true;
