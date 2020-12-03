@@ -1,5 +1,6 @@
 package com.eastcom.shopping.page;
 
+import com.eastcom.shopping.dao.SalesDao;
 import com.eastcom.shopping.entity.Sales;
 import com.eastcom.shopping.utils.ScannerChoice;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public class SalesPage {
     public static void dailySaleGoodsPage() {
         System.out.println("\t正在执行列出当日售出商品列表操作\n");
-        ArrayList<Sales> salesList = new ArrayList<>();
+        ArrayList<Sales> salesList = new SalesDao().dailySales();
 
         if (salesList.size() <= 0) {
             System.out.println("\t今日无商品出售！");
@@ -21,7 +22,7 @@ public class SalesPage {
             System.out.println("\t商品名称\t\t商品价格\t\t商品数量\t\t销量\n");
             for (int i = 0; i < salesList.size(); i++) {
                 Sales sales = salesList.get(i);
-                System.out.print("\t"+sales.getgName()+"\t\t"+sales.getgPrice()+" $\t\t"+sales.getgNum()+"\t\t"+sales.getAllSNum());
+                System.out.println("\t"+sales.getgName()+"\t\t"+sales.getgPrice()+" $\t\t"+sales.getgNum()+"\t\t"+sales.getAllSNum());
             }
             System.out.println("------------------------------");
             do {

@@ -7,6 +7,7 @@ public class Sales {
     private int gId;
     private int sId;
     private int sNum;
+    private int mId;
     private String gName;
     private double gPrice;
     private int gNum;
@@ -15,13 +16,15 @@ public class Sales {
 
     /**
      * 购物结算
-     * @param gId
      * @param sId
+     * @param gId
+     * @param mId
      * @param sNum
      */
-    public Sales(int gId, int sId, int sNum) {
+    public Sales(int sId, int gId, int mId, int sNum) {
         this.gId = gId;
         this.sId = sId;
+        this.mId = mId;
         this.sNum = sNum;
     }
 
@@ -85,6 +88,14 @@ public class Sales {
 
     public void setgNum(int gNum) {
         this.gNum = gNum;
+    }
+
+    public int getmId() {
+        return mId;
+    }
+
+    public void setmId(int mId) {
+        this.mId = mId;
     }
 
     public int getAllSNum() {

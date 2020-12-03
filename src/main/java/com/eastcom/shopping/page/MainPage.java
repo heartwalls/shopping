@@ -1,6 +1,10 @@
 package com.eastcom.shopping.page;
 
+import com.eastcom.shopping.dao.GoodsDao;
+import com.eastcom.shopping.dao.SalesDao;
 import com.eastcom.shopping.dao.SalesManDao;
+import com.eastcom.shopping.entity.Goods;
+import com.eastcom.shopping.entity.Sales;
 import com.eastcom.shopping.entity.SalesMan;
 import com.eastcom.shopping.utils.ScannerChoice;
 
@@ -203,9 +207,76 @@ public class MainPage extends ScannerChoice {
             if ("0".equals(shop)) {
                 cashRegisterPage();
             } else if ("s".equals(shop) || "S".equals(shop)) {
-                //
+                settlement(salesManId);
             } else {
                 System.err.println("\t输入不合法！");
+            }
+        } while (true);
+    }
+
+    /**
+     * 结算
+     * @param salesManId
+     */
+    public static void settlement(int salesManId) {
+        System.out.println("\n--请输入商品关键字--");
+        String info = ScannerChoice.scannerInfoString();
+        // 查询商品数量,1表示根据商品名称查询
+        // TODO
+        // 目前不能模糊查询
+        ArrayList<Goods> list = new GoodsDao().queryGoods(1);
+        int num = list.size();
+        if (num == 0 || list == null) {
+            System.out.println("找不到该商品！");
+        }
+        Goods goods = null;
+        int id = 0;
+        int goodsNum = 0;
+        double goodsPrice = 0;
+        for (int i = 0; i < list.size(); i++) {
+            goods = list.get(0);
+            id = goods.getgId();
+            goodsNum = goods.getgNum();
+            goodsPrice = goods.getgPrice();
+        }
+        if (goodsNum == 0) {
+            System.out.println("该商品已售空！");
+        }
+        System.out.println("--请输入购买数量--");
+        do {
+            int choiceNum = scannerNum();
+            if (choiceNum > goodsNum) {
+                System.err.println("\t！！仓库储备不足！！");
+                System.out.println("--请重新输入购买数量--");
+            } else {
+                double totalPrice = goodsPrice * choiceNum;
+                System.out.println("\t\t\t  购物车结算\n");
+                System.out.println("\t\t商品名称\t商品单价\t购买数量\t总价\n");
+                System.out.println("\t\t"+goods.getgName()+"\t"+goodsPrice+" $\t"+choiceNum+"\t"+totalPrice+" $\n");
+                System.out.println("确认购买：Y/N");
+                String isBuy = scannerInfoString();
+                if ("y".equals(isBuy) || "Y".equals(isBuy)) {
+                    System.out.println("\n总价："+totalPrice+" $");
+                    System.out.println("\n实际缴费金额");
+
+                    // 销售表更新
+                    Sales sales = new Sales(id+1, id, salesManId, choiceNum);
+                    boolean insert = new SalesDao().shoppingSettlement(sales);
+                    if (insert) {
+                        // TODO
+                        // 支付，接口未实现
+                        System.out.println("跳转到支付宝哦支付...");
+                        System.out.println("正在支付...");
+                        System.out.println("支付金额" + totalPrice + "元");
+                        System.out.println("\n谢谢光临，欢迎下次惠顾");
+                    } else {
+                        System.out.println("支付失败！");
+                    }
+                    commodityManagementPage();
+                } else if ("n".equals(isBuy) || "N".equals(isBuy)) {
+                    mainPage();
+                }
+                System.err.println("\t！！请确认购物意向！！");
             }
         } while (true);
     }

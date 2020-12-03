@@ -21,9 +21,7 @@ public class SalesDao {
     public ArrayList<Sales> dailySales() {
         ArrayList<Sales> salesList = new ArrayList<>();
         connection = DBUtils.connection();
-        String sql = "select gname,gprice,gnum, allSum from" +
-                "goods, (select gid as salesid,sum(snum) as allSum from sales where sDate =curdate() group by gid) as sale" +
-                "where gid = salesid";
+        String sql = "select gname,gprice,gnum, allSum from goods g, (select gId, sum(sNum) as allSum from sales) as s where g.gId = s.gId";
         try {
             ps = connection.prepareStatement(sql);
             resultSet = ps.executeQuery();
@@ -38,11 +36,7 @@ public class SalesDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                DBUtils.closeConnect(ps, resultSet, connection);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            DBUtils.closeConnect(ps, resultSet, connection);
         }
         return salesList;
     }
@@ -55,12 +49,13 @@ public class SalesDao {
     public boolean shoppingSettlement(Sales sales) {
         boolean bool = false;
         connection = DBUtils.connection();
-        String insert = "insert into sales(gId,sId,sNum) values(?,?,?)";
+        String insert = "insert into sales(sId,gId,mId,sNum) values(?,?,?,?)";
         try {
             ps = connection.prepareStatement(insert);
-            ps.setInt(1, sales.getgId());
-            ps.setInt(2, sales.getsId());
-            ps.setInt(3, sales.getgNum());
+            ps.setInt(1, sales.getsId());
+            ps.setInt(2, sales.getgId());
+            ps.setInt(3, sales.getmId());
+            ps.setInt(4, sales.getgNum());
             int i = ps.executeUpdate();
             if (i > 0) {
                 bool = true;
@@ -68,11 +63,7 @@ public class SalesDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                DBUtils.close(ps, connection);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            DBUtils.close(ps, connection);
         }
         return bool;
     }
