@@ -145,6 +145,7 @@ public class MainPage extends ScannerChoice {
                         // TODO
                         // 密码错误登陆限制，设计到数据库中
                         System.err.println("\t！！您已被强制退出系统！！");
+                        System.exit(-1);
                         break;
                     case 2:
                         System.out.println("------------------");
@@ -221,9 +222,6 @@ public class MainPage extends ScannerChoice {
     public static void settlement(int salesManId) {
         System.out.println("\n--请输入商品关键字--");
         String info = ScannerChoice.scannerInfoString();
-        // 查询商品数量,1表示根据商品名称查询
-        // TODO
-        // 目前不能模糊查询
         ArrayList<Goods> list = new GoodsDao().selectGoodsByName(info);
         int num = list.size();
         if (num == 0 || list == null) {

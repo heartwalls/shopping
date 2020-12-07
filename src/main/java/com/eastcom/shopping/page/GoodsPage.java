@@ -37,8 +37,22 @@ public class GoodsPage extends ScannerChoice {
      */
     public static void updateGoodsPage() {
         System.out.println("\t正在执行【更改商品】操作\n");
-        // TODO
         // 列出所有商品
+        ArrayList<Goods> list = new GoodsDao().displayGoods();
+        if (list.size() <= 0) {
+            System.out.println("库存为空！");
+            MainPage.commodityManagementPage();
+        } else {
+            System.out.println("\t商品编号\t\t商品名称\t\t商品价格\t\t商品数量\n");
+            for (int i = 0; i < list.size(); i++) {
+                Goods goods = list.get(i);
+                System.out.println("\t" + goods.getgId() + "\t\t" + goods.getgName() + "\t\t" + goods.getgPrice() + "\t\t" + goods.getgNum());
+                int num = goods.getgNum();
+                if (num == 0) {
+                    System.out.println(goods.getgName() + "已售空！");
+                }
+            }
+        }
 
         System.out.println("\n--------请选择您要更改的内容\n");
         System.out.println("\t1.更改商品");
@@ -55,7 +69,6 @@ public class GoodsPage extends ScannerChoice {
                     case 1:
                         System.out.println("请输入想要更改的商品编号：");
                         int id = ScannerChoice.scannerNum();
-                        // TODO
                         // 列出要修改的商品信息
                         // selectGoodsById(id);
                         // TODO
