@@ -87,8 +87,6 @@ public class SalesManPage extends ScannerChoice {
     public static void deleteSalesManPage() {
         System.out.println("\t正在执行 删除售货员 操作\n");
         System.out.println("请输入想要删除的售货员名字");
-        // TODO
-        // 查询时可以模糊查询，但是删除时会删除失败，必须以全名搜索才能删除
         String mName = ScannerChoice.scannerInfoString();
         ArrayList<SalesMan> man = new SalesManDao().querySalesMan(mName);
         if (man.size() <= 0) {
@@ -97,8 +95,9 @@ public class SalesManPage extends ScannerChoice {
         } else {
             System.out.println("\t\t\t删除售货员信息\n\n");
             System.out.println("\t售货员编号\t\t售货员姓名");
+            SalesMan salesMan = null;
             for (int i = 0; i < man.size(); i++) {
-                SalesMan salesMan = man.get(i);
+                salesMan = man.get(i);
                 System.out.println("\t"+salesMan.getmId()+"\t\t\t\t"+salesMan.getmName());
                 System.out.println();
             }
@@ -106,7 +105,7 @@ public class SalesManPage extends ScannerChoice {
                 System.out.println("\n确认删除该售货员：Y/N");
                 String choice = ScannerChoice.scannerInfoString();
                 if ("y".equals(choice) || "Y".equals(choice)) {
-                    boolean b = new SalesManDao().deleteSalesMan(mName);
+                    boolean b = new SalesManDao().deleteSalesMan(salesMan.getmName());
                     if (b) {
                         System.err.println("\t！！已成功刪除该售货员！！\n");
                     } else {
