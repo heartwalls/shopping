@@ -21,7 +21,7 @@ public class SalesDao {
     public ArrayList<Sales> dailySales() {
         ArrayList<Sales> salesList = new ArrayList<>();
         connection = DBUtils.connection();
-        String sql = "select gname,gprice,gnum, allSum from goods g, (select gId, sum(sNum) as allSum from sales) as s where g.gId = s.gId";
+        String sql = "select gname,gprice,gnum, allSum from goods g, (select gId, sum(sNum) as allSum from sales where DATE_FORMAT(sDate,'%Y-%m-%d') = curdate() group by gId) as s where g.gId = s.gId";
         try {
             ps = connection.prepareStatement(sql);
             resultSet = ps.executeQuery();
